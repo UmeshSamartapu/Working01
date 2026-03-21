@@ -1,0 +1,64 @@
+<div style="
+    width: 250px;
+    background-color: #1e293b;
+    color: white;
+    min-height: 100vh;
+    padding-top: 20px;
+">
+
+    <ul style="list-style: none; padding: 0;">
+
+        <!-- Dashboard -->
+        <li>
+            <a href="{% url 'dashboard' %}" style="color:white; text-decoration:none; display:block; padding:10px;">
+                🏠 Dashboard
+            </a>
+        </li>
+
+        <!-- Patients -->
+        <li>
+            <a href="{% url 'patient_list' %}" style="color:white; text-decoration:none; display:block; padding:10px;">
+                👤 Patients
+            </a>
+        </li>
+
+        <!-- ECG Upload -->
+        <li>
+            <a href="{% url 'upload_ecg' %}" style="color:white; text-decoration:none; display:block; padding:10px;">
+                📤 Upload ECG
+            </a>
+        </li>
+
+        <!-- Results -->
+        <li>
+            <a href="{% url 'results' %}" style="color:white; text-decoration:none; display:block; padding:10px;">
+                🤖 Results
+            </a>
+        </li>
+
+        <!-- AR Visualization -->
+        <li>
+            <a href="{% url 'ar_view' %}" style="color:white; text-decoration:none; display:block; padding:10px;">
+                ❤️ AR Visualization
+            </a>
+        </li>
+
+        <!-- Reports -->
+        <li>
+            <a href="{% url 'reports' %}" style="color:white; text-decoration:none; display:block; padding:10px;">
+                📊 Reports
+            </a>
+        </li>
+
+        <!-- Admin (Optional Role-Based) -->
+        {% if request.user.role == 'admin' %}
+        <li>
+            <a href="{% url 'admin_panel' %}" style="color:white; text-decoration:none; display:block; padding:10px;">
+                ⚙️ Admin Panel
+            </a>
+        </li>
+        {% endif %}
+
+    </ul>
+
+</div>
