@@ -1,0 +1,23 @@
+{% for ecg in ecgs %}
+    <div style="border:1px solid #ccc; padding:10px; margin:10px;">
+
+        <p><strong>ID:</strong> {{ ecg.id }}</p>
+        <p><strong>Patient:</strong> {{ ecg.patient.name }}</p>
+
+        <img src="{{ ecg.file.url }}" width="120">
+
+        <br><br>
+
+        <a href="{% url 'run_diagnosis' ecg.id %}">Run Diagnosis</a><br>
+        <a href="{% url 'view_result' ecg.id %}">View Result</a>
+
+        {% with ecg.diagnoses.last as diag %}
+            {% if diag %}
+                <p><strong>Result:</strong> {{ diag.result }} ({{ diag.confidence }}%)</p>
+            {% else %}
+                <p>No diagnosis yet</p>
+            {% endif %}
+        {% endwith %}
+
+    </div>
+{% endfor %}

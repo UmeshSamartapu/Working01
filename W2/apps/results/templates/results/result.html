@@ -1,0 +1,11 @@
+<h2>All Diagnosis Results</h2>
+
+{% for d in diagnoses %}
+    <div>
+        <p>ID: {{ d.ecg.id }}</p>
+        <p>Result: {{ d.result }}</p>
+        <p>Class: {{ d.predicted_class }}</p>
+        <p>Confidence: {{ d.confidence }}%</p>
+        <hr>
+    </div>
+{% endfor %}

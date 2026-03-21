@@ -1,0 +1,14 @@
+<h2>Diagnosis Result</h2>
+
+<p><strong>Final Result:</strong> {{ result }}</p>
+<p><strong>Detected Class:</strong> {{ class }}</p>
+<p><strong>Confidence:</strong> {{ confidence }}%</p>
+
+{% if result == "Arrhythmia Detected" %}
+    <p style="color:red;"><strong>⚠️ Abnormal ECG detected</strong></p>
+{% else %}
+    <p style="color:green;"><strong>✅ Normal ECG</strong></p>
+{% endif %}
+
+<br>
+<a href="/ecg/">⬅ Back to ECG List</a>

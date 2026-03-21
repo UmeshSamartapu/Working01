@@ -1,0 +1,37 @@
+<h2>Patients</h2>
+
+<form method="get">
+    <input type="text" name="q" placeholder="Search patient">
+    <button type="submit">Search</button>
+</form>
+
+<a href="{% url 'add_patient' %}">Add Patient</a>
+
+<hr>
+
+{% for patient in patients %}
+    <div style="border:1px solid #ccc; padding:10px; margin:10px;">
+        
+        <h3>{{ patient.name }}</h3>
+        <p>Age: {{ patient.age }}</p>
+
+        <a href="{% url 'edit_patient' patient.id %}">Edit</a>
+        <a href="{% url 'delete_patient' patient.id %}">Delete</a>
+
+        <hr>
+
+        <h4>ECG Records</h4>
+
+        {% for ecg in patient.ecg_records.all %}
+            <p>
+                <a href="{{ ecg.file.url }}">View ECG</a> |
+                <a href="{% url 'run_diagnosis' ecg.id %}">Run Diagnosis</a>
+            </p>
+        {% empty %}
+            <p>No ECG uploaded</p>
+        {% endfor %}
+
+    </div>
+{% empty %}
+    <p>No patients found</p>
+{% endfor %}
