@@ -1,0 +1,21 @@
+Arrhythmia_Classification
+
+django-admin startproject projectname :	Create new project
+python manage.py runserver	          : Start server
+python manage.py startapp appname	  : Create app
+python manage.py makemigrations	      : Create DB migrations
+python manage.py migrate	          : Apply migrations
+python manage.py createsuperuser	  : Create admin user
+python manage.py shell	              : Open Python shell
+python manage.py showmigrations	      : Show migration status
+
+conda activate env030702
+
+django-admin startproject Arrhythmia_Classification 
+python manage.py startapp AdminApp
+python manage.py startapp UserApp	
+python manage.py makemigrations	    
+python manage.py migrate	           
+python manage.py runserver
+
+python manage.py createsuperuser

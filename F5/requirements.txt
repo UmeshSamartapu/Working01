@@ -1,0 +1,10 @@
+#AdminApp
+django 
+tensorflow 
+numpy 
+opencv-python 
+matplotlib 
+imutils 
+pillow
+#extra for UserApp
+openai

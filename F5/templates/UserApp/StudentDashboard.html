@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
+
+    <meta charset="utf-8">
+    <title>Medical Student Dashboard</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+</head>
+
+<body>
+
+<div class="container-fluid">
+<div class="row">
+
+    <!-- Sidebar -->
+    <div class="col-md-3 bg-light min-vh-100 p-3">
+
+<a href="{% url 'StudentDashboard' %}" style="text-decoration: none;">
+    <h5 class="text-primary text-center mb-4">
+        <i class="fas fa-heartbeat"></i> Arrhythmia AI-AR
+    </h5>
+</a>
+
+        <nav class="nav flex-column">
+
+            <a href="/UserApp/StudentDashboard/" class="nav-link active">
+                <i class="fas fa-home mr-2"></i> Dashboard
+            </a>
+
+            <a href="/UserApp/ECGModule/" class="nav-link">
+                <i class="fas fa-chart-line mr-2"></i> ECG Learning
+            </a>
+
+            <a href="/UserApp/HeartAnatomy/" class="nav-link">
+                <i class="fas fa-heart mr-2"></i> Anatomy Viewer
+            </a>
+
+            <a href="/UserApp/QuizModule/" class="nav-link">
+                <i class="fas fa-question-circle mr-2"></i> Quiz
+            </a>
+
+            <a href="/UserApp/Certificate/" class="nav-link">
+                <i class="fas fa-certificate mr-2"></i> Certificate
+            </a>
+
+            <a href="/UserApp/logout" class="nav-link text-danger mt-4">
+                <i class="fas fa-sign-out-alt mr-2"></i> Logout
+            </a>
+
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+
+    
+    <div class="col-md-9 p-4">
+
+        <h2>🎓 Medical Student Dashboard</h2>
+
+        <!-- CARDS (same features) -->
+        <div class="row mt-4">
+
+            <div class="col-md-3">
+                <div class="card p-3 text-center">
+                    <h5>ECG Learning</h5>
+                    <a href="/UserApp/ECGModule/">Start Module</a>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card p-3 text-center border-info">
+                    <h5>Anatomy Viewer</h5>
+                    <a href="/UserApp/HeartAnatomy/">Launch 3D</a>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card p-3 text-center">
+                    <h5>Quiz</h5>
+                    <a href="/UserApp/QuizModule/">Take Quiz</a>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card p-3 text-center">
+                    <h5>Certificate</h5>
+                    <a href="/UserApp/Certificate/">View</a>
+                </div>
+            </div>
+
+        </div>
+
+        <hr>
+
+        <!-- SAME LOGIC TABLE -->
+        <h4>Clinical Cases - ECG Results</h4>
+
+        {% if history and history|length > 0 %}
+
+        <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+
+            <thead class="thead-light">
+                <tr>
+                    <th>Time</th>
+                    <th>ECG Status</th>
+                    <th>Affected Area</th>
+                    <th>Risk Level</th>
+                    <th>BPM</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for p in history %}
+                <tr>
+<td>
+    {% if p.time %}
+        {{ p.time|date:"Y-m-d H:i:s" }}
+    {% else %}
+        Just now
+    {% endif %}
+</td>
+
+                    <td>
+                        {% if p.label == "1" or p.label == "Normal" %}
+                            <span class="badge badge-success">Normal</span>
+                        {% elif p.label == "0" or p.label == "Abnormal" %}
+                            <span class="badge badge-danger">Abnormal</span>
+                        {% else %}
+                            {{ p.label }}
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        {% if p.affected_area %}
+                            {{ p.affected_area }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        {% if p.risk_level == "High" %}
+                            <span class="text-danger font-weight-bold">High</span>
+                        {% elif p.risk_level == "Medium" %}
+                            <span class="text-warning font-weight-bold">Medium</span>
+                        {% else %}
+                            <span class="text-success font-weight-bold">Low</span>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        {{ p.bpm }} BPM
+                        {% if p.bpm >= 100 %}
+                            <span class="text-danger">(Fast)</span>
+                        {% elif p.bpm > 0 and p.bpm < 50 %}
+                            <span class="text-warning">(Slow)</span>
+                        {% else %}
+                            <span class="text-success">(Normal)</span>
+                        {% endif %}
+                    </td>
+
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+        </div>
+
+        {% else %}
+            <div class="alert alert-info">
+                No clinical cases available yet.
+                <br>
+                Upload ECG via <a href="/UserApp/Test">/UserApp/Test</a>
+            </div>
+        {% endif %}
+
+        <!-- SAME LEARNING LOGIC -->
+        <hr>
+        <h4>Key Learning Points</h4>
+
+        {% if history and history|length > 0 %}
+            {% for p in history|slice:":3" %}
+                <div class="card p-3 mb-3">
+
+                    <h5>Case {{ forloop.counter }}</h5>
+
+                    <p><strong>Diagnosis:</strong>
+                        {% if p.label == "1" or p.label == "Normal" %}
+                            Normal sinus rhythm
+                        {% elif "MI" in p.label %}
+                            Myocardial infarction
+                        {% elif "abnormal" in p.label or "Abnormal" in p.label %}
+                            Arrhythmia
+                        {% else %}
+                            {{ p.label }}
+                        {% endif %}
+                    </p>
+
+                    <p><strong>Risk:</strong> {{ p.risk_level }}</p>
+                    <p><strong>BPM:</strong> {{ p.bpm }}</p>
+                    <p><strong>Area:</strong> {{ p.affected_area|default:"-" }}</p>
+
+                </div>
+            {% endfor %}
+        {% endif %}
+
+    </div>
+
+</div>
+</div>
+
+</body>
+</html>

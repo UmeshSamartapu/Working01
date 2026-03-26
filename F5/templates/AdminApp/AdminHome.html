@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Admin Dashboard | Arrhythmia AR AI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Bootstrap only -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <!-- Optional icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+</head>
+
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- Sidebar -->
+        <div class="col-md-3 bg-light min-vh-100 p-3">
+
+            <div class="text-center mb-4">
+                
+                <h5 class="text-primary">
+                    <i class="fas fa-heartbeat"></i>  Arrhythmia AI-AR
+
+                </h5>
+                
+                <small class="text-muted">Admin Control Center</small>
+            </div>
+
+            <nav class="nav flex-column">
+
+                <a href="Adminhome" class="nav-link active">
+                    <i class="fas fa-th-large mr-2"></i> Admin Home
+                </a>
+
+                <a href="ViewAllUsers" class="nav-link">
+                    <i class="fas fa-users mr-2"></i> View All Users
+                </a>
+
+                <a href="UploadDataset" class="nav-link">
+                    <i class="fas fa-file-upload mr-2"></i> Upload Dataset
+                </a>
+
+                <a href="DataGenerate" class="nav-link">
+                    <i class="fas fa-images mr-2"></i> Image Data Generate
+                </a>
+
+                <a href="GenerateCNN" class="nav-link">
+                    <i class="fas fa-project-diagram mr-2"></i> Generate CNN
+                </a>
+
+                <a href="GenerateANN" class="nav-link">
+                    <i class="fas fa-network-wired mr-2"></i> Generate ANN
+                </a>
+
+                <a href="comparison" class="nav-link">
+                    <i class="fas fa-chart-bar mr-2"></i> Comparison Analysis
+                </a>
+
+                <a href="logout" class="nav-link text-danger mt-4">
+                    <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                </a>
+
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9 p-4">
+
+            <!-- Header -->
+            <div class="mb-4 border p-3">
+                <h5 class="text-primary">Administrator Portal</h5>
+                <h2>Arrhythmia Diagnosis Deployment</h2>
+                <p class="text-muted">
+                    ECG Deep Learning Classification & AR 3D Interaction Interface
+                </p>
+            </div>
+
+            <!-- Overview -->
+            <div class="border p-4 mb-4">
+                <h3>Project Overview</h3>
+
+                <p class="text-justify lead-sm">
+                    This project introduces a cutting-edge clinical framework designed to enhance arrhythmia diagnosis through the synergy of <strong>Artificial Intelligence</strong> and <strong>Augmented Reality (AR)</strong>. By processing ECG datasets through high-accuracy Deep Learning models, the system classifies cardiac rhythms in real-time.
+                </p>
+
+                <p class="text-justify mt-4">
+                    The core innovation lies in the deployment of <strong>Convolutional Neural Networks (CNN)</strong> for visual signal analysis and <strong>Artificial Neural Networks (ANN)</strong> for structured patient data. These outputs are integrated into an interactive AR environment, where medical professionals can visualize and interact with a 3D heart model that highlights pathological electrical pathways based on the AI's classification results. This "human-in-the-loop" approach ensures that machine precision is balanced with clinical expertise, optimizing diagnostic reliability for modern cardiovascular healthcare.
+                </p>
+            </div>
+
+            <!-- Side Info -->
+            <div class="border p-4 text-center">
+                <i class="fas fa-stethoscope fa-3x text-primary mb-3"></i>
+                <h5>Clinical Metrics</h5>
+                <p class="text-muted">
+                    Generate comparison reports between CNN and ANN models.
+                </p>
+            </div>
+
+            <hr>
+
+            <footer class="text-center text-muted mt-4">
+                <p>&copy; 2026 Cardiac AR Solutions</p>
+            </footer>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    // Active nav highlighting
+    $(document).ready(function() {
+        $('.nav-link').on('click', function() {
+            $('.nav-link').removeClass('active');
+            $(this).addClass('active');
+        });
+    });
+</script>
+
+</body>
+</html>

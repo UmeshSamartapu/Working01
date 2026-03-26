@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Model Generation | Cardiac AI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap only -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+</head>
+
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- Sidebar -->
+        <div class="col-md-3 bg-light min-vh-100 p-3">
+
+            <div class="text-center mb-4">
+                <h5 class="text-primary">
+                    <i class="fas fa-heartbeat"></i>  Arrhythmia AI-AR
+
+                </h5>
+                <small class="text-muted">Clinical Administration</small>
+            </div>
+
+<nav class="nav flex-column">
+
+                <a href="Adminhome" class="nav-link active">
+                    <i class="fas fa-th-large mr-2"></i> Admin Home
+                </a>
+
+                <a href="ViewAllUsers" class="nav-link">
+                    <i class="fas fa-users mr-2"></i> View All Users
+                </a>
+
+                <a href="UploadDataset" class="nav-link">
+                    <i class="fas fa-file-upload mr-2"></i> Upload Dataset
+                </a>
+
+                <a href="DataGenerate" class="nav-link">
+                    <i class="fas fa-images mr-2"></i> Image Data Generate
+                </a>
+
+                <a href="GenerateCNN" class="nav-link">
+                    <i class="fas fa-project-diagram mr-2"></i> Generate CNN
+                </a>
+
+                <a href="GenerateANN" class="nav-link">
+                    <i class="fas fa-network-wired mr-2"></i> Generate ANN
+                </a>
+
+                <a href="comparison" class="nav-link">
+                    <i class="fas fa-chart-bar mr-2"></i> Comparison Analysis
+                </a>
+
+                <a href="logout" class="nav-link text-danger mt-4">
+                    <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                </a>
+
+            </nav>
+            
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9 p-4">
+
+            <!-- Header -->
+            <div class="border p-3 mb-4">
+                <h2>Neural Network Generation</h2>
+                <p class="text-muted">
+                    Initializing deep learning architectures for arrhythmia classification.
+                </p>
+                <h5 class="text-primary">MODEL ENGINE</h5>
+            </div>
+
+            <!-- Messages -->
+            {% if data %}
+            <div class="alert alert-danger">
+                <i class="fas fa-exclamation-triangle mr-2"></i> {{ data }}
+            </div>
+            {% endif %}
+
+            {% if msg %}
+            <div class="alert alert-warning">
+                <i class="fas fa-sync mr-2"></i> {{ msg }}
+            </div>
+            {% endif %}
+
+            <!-- Content -->
+            <div class="border p-4 text-center">
+
+                <h3>Architecture Initialization</h3>
+
+                <p class="text-muted mt-4">
+                    The system is ready to generate neural network layers.
+                    This process maps ECG signals into arrhythmia classifications.
+                </p>
+
+            </div>
+
+            <hr>
+
+            <!-- Footer -->
+            <footer class="text-center text-muted mt-4">
+                <p>&copy; 2026 HeartSync AR</p>
+            </footer>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    // Active nav highlight
+    $(document).ready(function() {
+        $('.nav-link').on('click', function() {
+            $('.nav-link').removeClass('active');
+            $(this).addClass('active');
+        });
+    });
+</script>
+
+</body>
+</html>

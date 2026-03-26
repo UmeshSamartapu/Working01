@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Cardiac Diagnostics | AI & AR Integration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --medical-blue: #0056b3;
+            --clinical-teal: #008b8b;
+            --bg-light: #f4f7f9;
+            --border-color: #dee2e6;
+            --text-dark: #2c3e50;
+        }
+
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            margin: 0;
+            padding-top: 70px; /* Offset for sticky navbar */
+        }
+
+        /* Horizontal Navbar Customization */
+        .navbar-custom {
+            background-color: #ffffff;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .nav-link-custom {
+            color: var(--text-dark) !important;
+            font-weight: 600;
+            margin: 0 10px;
+            transition: 0.3s;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-link-custom:hover, .nav-link-custom.active {
+            color: var(--medical-blue) !important;
+            border-bottom: 2px solid var(--medical-blue);
+        }
+
+        .main-content {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Information Cards */
+        .info-section {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 35px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+
+        .status-badge {
+            background: #e1f5fe;
+            color: #0288d1;
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        /* Professional Login Forms */
+        .login-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .clinical-form-box {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            border-top: 5px solid var(--medical-blue);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .form-label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #6c757d;
+            text-transform: uppercase;
+        }
+
+        .clinical-input {
+            height: 48px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 10px 15px;
+            width: 100%;
+            margin-bottom: 20px;
+            background: #fcfcfc;
+        }
+
+        .btn-medical-action {
+            background: var(--medical-blue);
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 6px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .method-step {
+            border-left: 3px solid var(--clinical-teal);
+            padding-left: 20px;
+            margin-bottom: 25px;
+        }
+
+        /* Smooth scrolling adjustment for fixed navbar */
+        section { scroll-margin-top: 100px; }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light fixed-top navbar-custom">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="/">
+            <h5 class="font-weight-bold text-primary mb-0"><i class="fas fa-microscope mr-2"></i> Arrhythmia AI-AR</h5>
+        </a>
+        
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#medicalNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="medicalNavbar">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link nav-link-custom active" data-scroll-nav="0" href="#">Overview</a></li>
+                <li class="nav-item"><a class="nav-link nav-link-custom" data-scroll-nav="1" href="#">Methodology</a></li>
+                <li class="nav-item"><a class="nav-link nav-link-custom" data-scroll-nav="2" href="#">Admin</a></li>
+                <li class="nav-item"><a class="nav-link nav-link-custom" data-scroll-nav="3" href="#">Clinician</a></li>
+                <li class="nav-item"><a class="nav-link nav-link-custom" data-scroll-nav="4" href="#">Student</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<main class="main-content">
+    <header class="mb-5 text-center" data-scroll-index='0'>
+        <span class="status-badge">AI Diagnostic Deployment</span>
+        <h1 class="font-weight-bold">Enhancing Arrhythmia Diagnosis</h1>
+        <p class="lead text-secondary mx-auto" style="max-width: 800px;">A multi-modal framework deploying deep learning for ECG classification and Augmented Reality for 3D heart visualization.</p>
+    </header>
+
+    <section class="info-section" data-scroll-index='1'>
+        <h3 class="font-weight-bold mb-4">Clinical Methodology</h3>
+        <div class="row">
+            <div class="col-md-7">
+                <div class="method-step">
+                    <h6>01. Signal Acquisition & Preprocessing</h6>
+                    <p class="small text-muted">High-fidelity ECG data is cleaned and normalized using digital filters to ensure accurate neural network ingestion.</p>
+                </div>
+                <div class="method-step">
+                    <h6>02. Deep Learning Classification</h6>
+                    <p class="small text-muted">Convolutional Neural Networks (CNN) classify rhythms into specific arrhythmia types (AFib, PVC, Tachycardia) with real-time accuracy.</p>
+                </div>
+                <div class="method-step">
+                    <h6>03. AR Spatial Visualization</h6>
+                    <p class="small text-muted">The classified results are projected onto a 3D Heart model, enabling clinicians to interact with the anatomical region affected.</p>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="p-4 bg-light rounded text-center h-100 d-flex flex-column justify-content-center border">
+                    <i class="fas fa-cube fa-4x text-primary mb-3"></i>
+                    <h6>Interactive 3D Engine</h6>
+                    <p class="small">Deploying via ARCore/Unity for spatial surgical planning.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="login-grid">
+
+        <div class="clinical-form-box" data-scroll-index='2'>
+            <h4 class="font-weight-bold mb-3">Administrator</h4>
+            <p class="text-danger small">{{data}}</p>
+
+            <form action="/AdminAction" method="post">
+                {% csrf_token %}
+                <label class="form-label">System Admin ID</label>
+                <input type="text" class="clinical-input" name="username" placeholder="Enter ID">
+                
+                <label class="form-label">Security Password</label>
+                <input type="password" class="clinical-input" name="password" placeholder="••••••••">
+                
+                <button type="submit" class="btn-medical-action">System Authentication</button>
+            </form>
+
+            <!-- <form action="{% url 'AdminAction' %}" method="post">
+            {% csrf_token %}
+            <label class="form-label">System Admin ID</label>
+            <input type="text" class="clinical-input" name="username" placeholder="Enter ID">
+            <label class="form-label">Security Password</label>
+            <input type="password" class="clinical-input" name="password" placeholder="••••••••">
+            <button type="submit" class="btn-medical-action">System Authentication</button>
+            </form> -->
+
+        </div>
+
+        <div class="clinical-form-box" style="border-top-color: var(--clinical-teal);" data-scroll-index='3'>
+            <h4 class="font-weight-bold mb-3">Clinician Portal</h4>
+            <form action="/UserApp/LogAction" method="post">
+                {% csrf_token %}
+                <label class="form-label">Username</label>
+                <input type="text" class="clinical-input" name="uname" placeholder="Enter Username">
+                <label class="form-label">Password</label>
+                <input type="password" class="clinical-input" name="pwd" placeholder="••••••••">
+                <button type="submit" class="btn-medical-action" style="background: var(--clinical-teal);">Launch Diagnostics</button>
+                <div class="text-center mt-3">
+                    <a href="/UserApp/Register" class="small text-primary font-weight-bold">Register Clinic Account</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="clinical-form-box" style="border-top-color: #6c757d;" data-scroll-index='4'>
+            <h4 class="font-weight-bold mb-3">Student Portal</h4>
+            <form action="/UserApp/StudentLogin/" method="post">
+                {% csrf_token %}
+                <label class="form-label">Student ID</label>
+                <input type="text" class="clinical-input" name="username" placeholder="Enter Student ID">
+                <label class="form-label">Password</label>
+                <input type="password" class="clinical-input" name="password" placeholder="••••••••">
+                <button type="submit" class="btn-medical-action" style="background:#6c757d;">Student Login</button>
+                <div class="text-center mt-3 small text-muted">Use demo: <strong>student / student</strong></div>
+                {% if error %}
+                <div class="text-danger mt-2">{{ error }}</div>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+
+    <footer class="mt-5 py-4 border-top text-center">
+        <p class="small text-muted">&copy; 2026 AI-Cardiac Solutions | Secure Medical Deployment</p>
+    </footer>
+</main>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'js/scrollIt.min.js' %}"></script>
+<script>
+    $(function(){
+        $.scrollIt({
+            topOffset: -70, // Adjusted for horizontal navbar height
+            scrollTime: 800,
+            activeClass: 'active'
+        });
+    });
+</script>
+</body>
+</html>

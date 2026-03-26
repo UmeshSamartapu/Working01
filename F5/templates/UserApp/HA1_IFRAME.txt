@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Heart Anatomy | Cardiac AI</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+
+    <style>
+        body {
+            background:#f8f9fa;
+        }
+
+        .sidebar {
+            height:100vh;
+            background:#ffffff;
+            border-right:1px solid #ddd;
+            padding:20px;
+        }
+
+        .viewer-container {
+            height:80vh;
+            border-radius:10px;
+            overflow:hidden;
+            border:1px solid #ccc;
+            position:relative;
+        }
+
+        iframe {
+            width:100%;
+            height:100%;
+            border:none;
+        }
+
+        .hud-box {
+            position:absolute;
+            top:20px;
+            right:20px;
+            background:white;
+            padding:15px;
+            border-radius:8px;
+            box-shadow:0 4px 10px rgba(0,0,0,0.1);
+            font-size:14px;
+        }
+
+        .floating-label {
+            position:absolute;
+            display:none;
+            background:red;
+            color:white;
+            padding:8px 12px;
+            border-radius:5px;
+            font-size:12px;
+            z-index:100;
+            transform:translate(-50%, -120%);
+        }
+
+        .status-bar {
+            position:absolute;
+            top:20px;
+            left:20px;
+            background:#007bff;
+            color:white;
+            padding:8px 15px;
+            border-radius:20px;
+            font-size:12px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container-fluid">
+<div class="row">
+
+<!-- Sidebar -->
+    <div class="col-md-3 bg-light min-vh-100 p-3">
+
+<a href="{% url 'StudentDashboard' %}" style="text-decoration: none;">
+    <h5 class="text-primary text-center mb-4">
+        <i class="fas fa-heartbeat"></i> CARDIAC AI
+    </h5>
+</a>
+
+        <nav class="nav flex-column">
+
+            <a href="/UserApp/StudentDashboard/" class="nav-link active">
+                <i class="fas fa-home mr-2"></i> Dashboard
+            </a>
+
+            <a href="/UserApp/ECGModule/" class="nav-link">
+                <i class="fas fa-chart-line mr-2"></i> ECG Learning
+            </a>
+
+            <a href="/UserApp/HeartAnatomy/" class="nav-link">
+                <i class="fas fa-heart mr-2"></i> Anatomy Viewer
+            </a>
+
+            <a href="/UserApp/QuizModule/" class="nav-link">
+                <i class="fas fa-question-circle mr-2"></i> Quiz
+            </a>
+
+            <a href="/UserApp/Certificate/" class="nav-link">
+                <i class="fas fa-certificate mr-2"></i> Certificate
+            </a>
+
+            <a href="/UserApp/logout" class="nav-link text-danger mt-4">
+                <i class="fas fa-sign-out-alt mr-2"></i> Logout
+            </a>
+
+        </nav>
+    </div>
+
+    <!-- Main -->
+    <div class="col-md-9 p-4">
+
+        <h3 class="mb-3">🫀 3D Heart Anatomy Viewer</h3>
+
+        <div class="viewer-container">
+
+            <!-- 3D MODEL -->
+            <iframe id="heart-viewer"
+                src="https://sketchfab.com/models/a3f0ea2030214a6bbaa97e7357eebd58/embed?autostart=1&ui_controls=0&ui_infos=0">
+            </iframe>
+
+            <!-- STATUS -->
+            <div class="status-bar" id="sync-status">
+                Syncing with ECG...
+            </div>
+
+            <!-- HUD -->
+            <div class="hud-box">
+                <b>Prediction:</b> {{ prediction }}<br>
+                <b>Risk:</b> {{ risk_level }}<br>
+                <b>Area:</b> {{ affected_area }}
+            </div>
+
+            <!-- FLOATING LABEL -->
+            <div id="ai-floating-label" class="floating-label">
+                <span id="label-text"></span>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+</div>
+
+<!-- JS (UNCHANGED LOGIC) -->
+<script src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
+
+<script>
+(function() {
+    const iframe = document.getElementById('heart-viewer');
+    const client = new Sketchfab(iframe);
+
+    const affectedCodes = "{{ affected_code|default:'NORMAL' }}".split(',');
+    const affectedArea = "{{ affected_area|default:'N/A' }}";
+
+    const floatingLabel = document.getElementById('ai-floating-label');
+    const labelText = document.getElementById('label-text');
+
+    client.init('a3f0ea2030214a6bbaa97e7357eebd58', {
+        success: function(api) {
+            api.start();
+
+            api.addEventListener('viewerready', function() {
+
+                document.getElementById('sync-status').innerText = "Analyzing...";
+
+                api.setHighlightOptions({
+                    outlineColor: [1, 0, 0],
+                    outlineWidth: 5,
+                    fillColor: [1, 0, 0],
+                    fillAlpha: 0.3
+                });
+
+                api.getNodeMap(function(err, nodes) {
+
+                    let found = false;
+
+                    Object.values(nodes).forEach(node => {
+                        if(node.name && node.name.toLowerCase().includes(affectedCodes[0].toLowerCase())){
+                            api.setHighlight(node.instanceID, 1);
+                            found = true;
+                        }
+                    });
+
+                    if(found){
+                        labelText.innerText = affectedArea;
+                        floatingLabel.style.display = 'block';
+                        document.getElementById('sync-status').innerText = "Abnormal Detected";
+                    } else {
+                        document.getElementById('sync-status').innerText = "Normal";
+                    }
+
+                });
+
+            });
+        }
+    });
+
+})();
+</script>
+
+</body>
+</html>

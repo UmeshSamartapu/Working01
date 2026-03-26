@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>User Profile | Cardiac AI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+</head>
+
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- Sidebar -->
+        <div class="col-md-3 bg-light min-vh-100 p-3">
+
+            <div class="text-center mb-4">
+                <h5 class="text-primary">
+                    <i class="fas fa-heartbeat"></i> Arrhythmia AI-AR
+                </h5>
+            </div>
+
+            <nav class="nav flex-column">
+
+                <a href="/UserApp/home" class="nav-link">
+                    <i class="fas fa-home mr-2"></i> Dashboard
+                </a>
+
+                <a href="/UserApp/Profile" class="nav-link active">
+                    <i class="fas fa-user-circle mr-2"></i> View Profile
+                </a>
+
+                <a href="/UserApp/Test" class="nav-link">
+                    <i class="fas fa-stethoscope mr-2"></i> New Detection
+                </a>
+
+                <a href="/UserApp/HA/" class="nav-link">
+            <i class="fas fa-heart mr-2"></i> Anatomy Viewer
+        </a>
+
+                <a href="/UserApp/logout" class="nav-link text-danger mt-4">
+                    <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                </a>
+
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9 p-4">
+
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h4>Welcome, {{request.session.user}}</h4>
+                    <p class="text-muted mb-0">Your system is ready for diagnosis</p>
+                </div>
+                <i class="fas fa-user-shield fa-2x text-muted"></i>
+            </div>
+
+            <!-- Cards -->
+            <div class="row">
+
+                <!-- Profile Card -->
+                <div class="col-md-6 mb-4">
+                    <div class="card text-center p-3">
+                        <div class="mb-3">
+                            <i class="fas fa-user-md fa-3x"></i>
+                        </div>
+
+                        <h5>{{request.session.user}}</h5>
+
+                        <p class="text-muted">
+                            <i class="fas fa-id-badge"></i> {{request.session.userid}}
+                        </p>
+
+                        <small class="text-muted">
+                            This ID is linked to your clinical session.
+                        </small>
+                    </div>
+                </div>
+
+                <!-- System Status -->
+                <div class="col-md-6 mb-4">
+                    <div class="card p-3">
+                        <h5 class="text-primary">System Status</h5>
+
+                        <p>Model Status: <strong>Active</strong></p>
+                        <p>Cloud Storage: <strong>Connected</strong></p>
+
+                        <a href="/UserApp/Test" class="btn btn-primary btn-block mt-3">
+                            Start Analysis
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Footer -->
+            <footer class="text-center text-muted mt-4">
+                <small>&copy; 2026 Cardiac AI | Secure System</small>
+            </footer>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    $('.nav-link').click(function() {
+        $('.nav-link').removeClass('active');
+        $(this).addClass('active');
+    });
+</script>
+
+</body>
+</html>

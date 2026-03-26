@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ECG Learning | Cardiac AI</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+</head>
+
+<body>
+
+<div class="container-fluid">
+<div class="row">
+
+    <!-- Sidebar (SAME AS DASHBOARD) -->
+    <div class="col-md-3 bg-light min-vh-100 p-3">
+
+<a href="{% url 'StudentDashboard' %}" style="text-decoration: none;">
+    <h5 class="text-primary text-center mb-4">
+        <i class="fas fa-heartbeat"></i> Arrhythmia AI-AR
+    </h5>
+</a>
+
+        <nav class="nav flex-column">
+
+            <a href="/UserApp/StudentDashboard/" class="nav-link">
+                <i class="fas fa-home mr-2"></i> Dashboard
+            </a>
+
+            <a href="/UserApp/ECGModule/" class="nav-link active">
+                <i class="fas fa-chart-line mr-2"></i> ECG Learning
+            </a>
+
+            <a href="/UserApp/HeartAnatomy/" class="nav-link">
+                <i class="fas fa-heart mr-2"></i> Anatomy Viewer
+            </a>
+
+            <a href="/UserApp/QuizModule/" class="nav-link">
+                <i class="fas fa-question-circle mr-2"></i> Quiz
+            </a>
+
+            <a href="/UserApp/Certificate/" class="nav-link">
+                <i class="fas fa-certificate mr-2"></i> Certificate
+            </a>
+
+            <a href="/UserApp/logout" class="nav-link text-danger mt-4">
+                <i class="fas fa-sign-out-alt mr-2"></i> Logout
+            </a>
+
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="col-md-9 p-4">
+
+        <h2 class="text-primary mb-4">📈 ECG Learning Module</h2>
+
+        <div class="row">
+
+            <!-- THEORY -->
+            <div class="col-md-4">
+                <div class="card p-3 shadow-sm">
+
+                    <h5 class="text-primary">📚 ECG Theory</h5>
+
+                    <p class="small text-muted">ECG components:</p>
+
+                    <ul class="small">
+                        <li><strong>P wave</strong> — atrial depolarization</li>
+                        <li><strong>PR interval</strong> — AV conduction</li>
+                        <li><strong>QRS</strong> — ventricular depolarization</li>
+                        <li><strong>ST & T</strong> — repolarization</li>
+                    </ul>
+
+                    <p class="small text-muted">Interpretation:</p>
+
+                    <ol class="small">
+                        <li>Check rate & rhythm</li>
+                        <li>Measure PR & QRS</li>
+                        <li>Look for abnormalities</li>
+                    </ol>
+
+                    <div class="text-center mt-3">
+                        <button class="btn btn-sm btn-primary" onclick="zoomIn()">Zoom In</button>
+                        <button class="btn btn-sm btn-secondary" onclick="zoomOut()">Zoom Out</button>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ECG GRAPH -->
+            <div class="col-md-8">
+                <div class="card p-3 shadow-sm text-center">
+
+                    <h5 class="text-secondary mb-3">ECG Signal Visualization</h5>
+
+                    <canvas id="ecgCanvas" width="900" height="300" class="border"></canvas>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- LEARNING INFO -->
+        <div class="card shadow-sm p-4 mt-4">
+
+            <h4 class="text-primary">📖 Learning Mode</h4>
+
+            <p class="text-muted">
+                Review ECG analysis results performed by clinicians.
+                Understand patterns, risk levels, and cardiac conditions.
+            </p>
+
+            <div class="alert alert-info">
+                <strong>💡 How to Use:</strong>
+                <ul class="mb-0 mt-2">
+                    <li>Go to Dashboard to view cases</li>
+                    <li>Analyze ECG status & risk levels</li>
+                    <li>Correlate with theory</li>
+                    <li>Take quiz & earn certificate</li>
+                </ul>
+            </div>
+
+            <div class="text-center mt-3">
+                <a href="/UserApp/StudentDashboard/" class="btn btn-primary">
+                    📊 View Clinical Cases
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+</div>
+
+<!-- JS (UNCHANGED) -->
+<script>
+const canvas = document.getElementById("ecgCanvas");
+const ctx = canvas.getContext("2d");
+
+let scale = 1.5;
+let time = 0;
+let speed = 0.02;
+
+/* =============================
+   REAL ECG WAVE (P-QRS-T)
+============================= */
+function generateECG(t) {
+    let y = 0;
+
+    // P wave
+    if (t > 0 && t < 0.1) {
+        y = 0.2 * Math.sin(Math.PI * t * 10);
+    }
+
+    // Q dip
+    else if (t >= 0.1 && t < 0.12) {
+        y = -0.5;
+    }
+
+    // R peak
+    else if (t >= 0.12 && t < 0.14) {
+        y = 2;
+    }
+
+    // S dip
+    else if (t >= 0.14 && t < 0.18) {
+        y = -1;
+    }
+
+    // T wave
+    else if (t >= 0.2 && t < 0.35) {
+        y = 0.5 * Math.sin(Math.PI * (t - 0.2) * 5);
+    }
+
+    return y;
+}
+
+/* =============================
+   GRID (ECG PAPER STYLE)
+============================= */
+function drawGrid() {
+    ctx.strokeStyle = "#e6e6e6";
+
+    for (let x = 0; x < canvas.width; x += 20) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvas.height);
+        ctx.stroke();
+    }
+
+    for (let y = 0; y < canvas.height; y += 20) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(canvas.width, y);
+        ctx.stroke();
+    }
+}
+
+/* =============================
+   DRAW ECG (REAL-TIME)
+============================= */
+function drawECG() {
+
+    // Fade effect
+    ctx.fillStyle = "rgba(255,255,255,0.3)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    drawGrid();
+
+    ctx.beginPath();
+    ctx.strokeStyle = "#28a745"; // green ECG
+    ctx.lineWidth = 2;
+
+    for (let i = 0; i < canvas.width; i++) {
+
+        let t = (time + i * 0.01) % 1;
+        let y = generateECG(t);
+
+        let posY = canvas.height / 2 - y * 60 * scale;
+
+        if (i === 0) ctx.moveTo(i, posY);
+        else ctx.lineTo(i, posY);
+    }
+
+    ctx.stroke();
+
+    time += speed;
+}
+
+/* =============================
+   CONTINUOUS LOOP
+============================= */
+setInterval(drawECG, 30);
+
+/* =============================
+   ZOOM CONTROLS (WORKING)
+============================= */
+function zoomIn(){
+    scale += 0.2;
+}
+
+function zoomOut(){
+    scale = Math.max(0.5, scale - 0.2);
+}
+</script>
+
+</body>
+</html>
